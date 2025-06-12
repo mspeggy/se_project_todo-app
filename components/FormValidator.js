@@ -8,31 +8,37 @@ class FormValidator {
     this._formEl = formEl;
   }
 
-  showInputError(inputElement) {
-    this._errorElementId = `#${inputElement.id}-error`;
-    this._errorElement = formElement.querySelector(errorElementId);
-    this._inputElement.classList.add(settings.inputErrorClass);
-    this._errorElement.textContent = errorMessage;
-    this._errorElement.classList.add(settings.errorClass);
+  showInputError(inputElement, errorMessage, errorElementId) {
+    const errorElementId = `#${inputElement.id}-error`;
+    const errorElement = this._formEl.querySelector(errorElementId);
+    inputElement.classList.add(this._inputErrorClass);
+    errorElement.textContent = errorMessage;
+    errorElement.classList.add(this._errorClass);
   }
 
   hideInputError(inputElement) {
-    this._errorElementId = `#${inputElement.id}-error`;
-    this._errorElement = formElement.querySelector(errorElementId);
-    this._inputElement.classList.remove(settings.inputErrorClass);
-    this._errorElement.classList.remove(settings.errorClass);
-    this._errorElement.textContent = "";
+    const errorElementId = `#${inputElement.id}-error`;
+    const errorElement = this._formElement.querySelector(errorElementId);
+    inputElement.classList.remove(this._settings.inputErrorClass);
+    errorElement.classList.remove(this._settings.errorClass);
+    errorElement.textContent = "";
   }
 
   resetValidation() {
     this._disableSubmitButton();
-    this._resetForminputs();
+    this._inputList.forEach((inputElement) => {
+      this.hideInputError(inputElement);
+      inputElement.value = "";
+    });
+  }
+
+  resetValidation() {
+    this._resetFormInputs();
+    this._inputList.forEach((input) => (input.value = ""));
   }
 
   hasInvalidInput = () => {
-    this._return = this._inputList.some((inputElement) => {
-      this._return = !inputElement.validity.valid;
-    });
+    return this._inputList.some((inputElement) => !inputElement.validity.valid);
   };
 
   toggleButtonState = () => {
@@ -46,12 +52,11 @@ class FormValidator {
   };
 
   _checkInputValidity(inputElement) {
-    if (!inputElement) {
-      showInputError(
-        this._formElement,
-        this._inputElement,
-        this._inputElement.validationMessage,
-        this._settings
+    if (!inputElement.validity.valid) {
+      this.showInputError(
+        inputElement,
+        inputElement.validationMessage,
+        `#${inputElement.id}-error`
       );
     } else {
       this.hideInputError(inputElement);

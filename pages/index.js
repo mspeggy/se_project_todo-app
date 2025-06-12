@@ -44,13 +44,13 @@ addTodoForm.addEventListener("submit", (evt) => {
 
   const id = uuidv4();
   const values = { name, date, id };
-  const todo = generateTodo(values);
+  const todo = renderTodo(values);
   todosList.append(todo);
   closeModal(addTodoPopup);
 });
 
 initialTodos.forEach((item) => {
-  const todo = generateTodo(item);
+  const todo = renderTodo(item);
   todosList.append(todo);
 });
 
