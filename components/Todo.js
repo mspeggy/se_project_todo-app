@@ -37,7 +37,7 @@ class Todo {
     const todoDeleteBtn = this._todoElement.querySelector(".todo__delete-btn");
  
     todoNameEl.textContent = this._data.name;
-    this._dueDate = new Date(this._data.date);
+    this._dueDate = this._data.date ? new Date(this._data.date) : null;
     if (!isNaN(this._dueDate)) {
      todoDate.textContent = `Due: ${this._dueDate.toLocaleString("en-US", {
        year: "numeric",
