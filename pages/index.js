@@ -41,7 +41,7 @@ addTodoForm.addEventListener("submit", (evt) => {
   renderTodo(values);
   newTodoValidator.resetValidation();
   closeModal(addTodoPopup);
-  addTodoForm.reset();
+  //addTodoForm.reset();
 });
 
 function generateTodo(data) {

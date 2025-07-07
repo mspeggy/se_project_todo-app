@@ -17,6 +17,13 @@ class FormValidator {
   showInputError(inputElement, errorMessage) {
     const errorElementId = `#${inputElement.id}-error`;
     const errorElement = this._formEl.querySelector(errorElementId);
+    
+    document.querySelector("#add-todo-button").addEventListener("click", () => {
+      form.reset();
+      FormValidator.resetValidation();
+      document.querySelector("#todo-modal").classList.add("modal_opened");
+    });
+
     inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this._errorClass);
@@ -25,6 +32,7 @@ class FormValidator {
   hideInputError(inputElement) {
     const errorElementId = `#${inputElement.id}-error`;
     const errorElement = this._formEl.querySelector(errorElementId);
+    
     inputElement.classList.remove(this._inputErrorClass);
     errorElement.classList.remove(this._errorClass);
     errorElement.textContent = "";
@@ -34,8 +42,8 @@ class FormValidator {
     if (!inputElement.validity.valid) {
       this.showInputError(
         inputElement,
-        inputElement.validationMessage,
-        `#${inputElement.id}-error`
+        inputElement.validationMessage
+        // `#${inputElement.id}-error`
       );
     } else {
       this.hideInputError(inputElement);
@@ -46,10 +54,14 @@ class FormValidator {
     return this._inputList.some((inputElement) => !inputElement.validity.valid);
   };
 
+  _disableSubmitButton = () => {
+    this._buttonElement.classList.add(this._inactiveButtonClass);
+    this._buttonElement.disabled = true;
+  };
+
   toggleButtonState = () => {
     if (this.hasInvalidInput()) {
-      this._buttonElement.classList.add(this._inactiveButtonClass);
-      this._buttonElement.disabled = true;
+      this._disableSubmitButton();
     } else {
       this._buttonElement.classList.remove(this._inactiveButtonClass);
       this._buttonElement.disabled = false;
@@ -70,7 +82,7 @@ class FormValidator {
     this._inputList.forEach((inputElement) => {
       this.hideInputError(inputElement);
     });
-    this.toggleButtonState();
+    this._disableSubmitButton();
   }
 
   enableValidation() {
