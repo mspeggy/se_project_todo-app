@@ -21,9 +21,9 @@ const handleCheck = (checked) => {
   todoCounter.updateCompleted(checked);
 };
 
-const handleDelete = (completed) => {
+const handleDelete = (data) => {
   todoCounter.updateTotal(false);
-  if (completed) {
+  if (data.completed) {
     todoCounter.updateCompleted(false);
   }
 };
@@ -43,7 +43,7 @@ const addTodoPopup = new PopupWithForm({
     const values = { name, date, id, completed: false };
 
     const todoElement = generateTodo(values);
-    todosList.append(todoElement);
+    section.addItem(todoElement);
 
     //  Update total counter on add
     todoCounter.updateTotal(true, false);
@@ -58,7 +58,7 @@ const section = new Section({
   items: initialTodos,
   renderer: (item) => {
     const todoElement = generateTodo(item);
-    todosList.append(todoElement);
+    section.addItem(todoElement);
   },
   containerSelector: ".todos__list",
 });

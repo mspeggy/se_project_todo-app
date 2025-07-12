@@ -18,11 +18,9 @@ class FormValidator {
     const errorElementId = `#${inputElement.id}-error`;
     const errorElement = this._formEl.querySelector(errorElementId);
     
-    document.querySelector("#add-todo-button").addEventListener("click", () => {
       form.reset();
       FormValidator.resetValidation();
       document.querySelector("#todo-modal").classList.add("modal_opened");
-    });
 
     inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = errorMessage;
