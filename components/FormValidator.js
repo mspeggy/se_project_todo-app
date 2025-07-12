@@ -6,6 +6,7 @@ class FormValidator {
     this._inputErrorClass = settings.inputErrorClass;
     this._inactiveButtonClass = settings.inactiveButtonClass;
     this._formEl = formEl;
+
     this._inputList = Array.from(
       this._formEl.querySelectorAll(this._inputSelector)
     );
@@ -15,12 +16,8 @@ class FormValidator {
   }
 
   showInputError(inputElement, errorMessage) {
-    const errorElementId = `#${inputElement.id}-error`;
+    const errorElementId = `#${inputElement.id}-error`; //  use backticks and template literal
     const errorElement = this._formEl.querySelector(errorElementId);
-    
-      form.reset();
-      FormValidator.resetValidation();
-      document.querySelector("#todo-modal").classList.add("modal_opened");
 
     inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = errorMessage;
@@ -28,9 +25,9 @@ class FormValidator {
   }
 
   hideInputError(inputElement) {
-    const errorElementId = `#${inputElement.id}-error`;
+    const errorElementId = `#${inputElement.id}-error`; 
     const errorElement = this._formEl.querySelector(errorElementId);
-    
+
     inputElement.classList.remove(this._inputErrorClass);
     errorElement.classList.remove(this._errorClass);
     errorElement.textContent = "";
@@ -41,7 +38,6 @@ class FormValidator {
       this.showInputError(
         inputElement,
         inputElement.validationMessage
-        // `#${inputElement.id}-error`
       );
     } else {
       this.hideInputError(inputElement);
@@ -49,7 +45,9 @@ class FormValidator {
   }
 
   hasInvalidInput = () => {
-    return this._inputList.some((inputElement) => !inputElement.validity.valid);
+    return this._inputList.some(
+      (inputElement) => !inputElement.validity.valid
+    );
   };
 
   _disableSubmitButton = () => {
